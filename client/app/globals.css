@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --foreground-rgb: 186 190 211;
+    --background-start-rgb: 30, 31, 36;
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+input {
+    background: none;
+}
+
+.grid-page {
+    grid-template-areas:
+        "hourly map map"
+        "hourly overview overview"
+        "forecast overview overview"
+        "forecast overview overview";
+}
