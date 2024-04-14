@@ -6,6 +6,7 @@ import { IoTimerOutline, IoWaterOutline } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
 import { BsThermometerHalf, BsWind } from "react-icons/bs";
 import { useRequestData } from "./RequestDataContext";
+import Loading from "./Loading";
 // import { gql, useQuery } from "@apollo/client";
 
 // const GET_FORECAST = gql`
@@ -30,7 +31,7 @@ import { useRequestData } from "./RequestDataContext";
 
 export default function CurrentInfoComponent() {
     const { data, loading, error } = useRequestData();
-    if (loading) return "loading...";
+    if (loading) return <Loading name="hourly" count={3} />;
     if (error) return `error: ${error}`;
     const currentData: ICurrentInfo = data?.getForecastData;
     const last_updated = new Date(
@@ -40,7 +41,6 @@ export default function CurrentInfoComponent() {
     return (
         <CustomCard
             name="hourly"
-            loading={false}
             className="flex flex-row items-center justify-between min-w-[600px]">
             <div className="w-2/5">
                 <Image

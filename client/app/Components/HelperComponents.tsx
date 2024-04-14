@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Card, CardBody, Image } from "@nextui-org/react";
+import { Card, CardBody, CardProps, Image } from "@nextui-org/react";
 
 export function HourlyWeather({ hourData }: { hourData: IHourlyData }) {
     const epoch = new Date(hourData.time_epoch * 1000);
@@ -69,7 +69,6 @@ export function CustomCard({
     children,
     name,
     className = "",
-    loading,
     classNameOuter = "",
     ...rest
 }: {
@@ -77,11 +76,7 @@ export function CustomCard({
     className?: string;
     classNameOuter?: string;
     name: string;
-    loading: boolean;
-}) {
-    if (loading) {
-        return "loading...";
-    }
+} & CardProps) {
     return (
         <Card
             {...rest}

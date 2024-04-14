@@ -4,6 +4,7 @@ import { Tab, Tabs } from "@nextui-org/react";
 import Chart from "./Chart";
 import { gql, useQuery } from "@apollo/client";
 import { useRequestData } from "./RequestDataContext";
+import Loading from "./Loading";
 
 // const OVERVIEW_DATA = gql`
 //     fragment ForecastFragment on Forecast {
@@ -40,7 +41,7 @@ export default function OverviewComponent() {
     //     },
     // });
     const { data, loading, error } = useRequestData();
-    if (loading) return "loading...";
+    if (loading) return <Loading name="overview" />;
     if (error) return `error: ${error}`;
 
     const {
@@ -67,9 +68,8 @@ export default function OverviewComponent() {
         holder = holder.concat(day.hour);
     }
 
-    console.log(holder);
     return (
-        <CustomCard name="overview" className="p-4" loading={loading}>
+        <CustomCard name="overview" className="p-4">
             <div className="">
                 <h1 className="text-3xl font-bold">Overview</h1>
                 <Tabs

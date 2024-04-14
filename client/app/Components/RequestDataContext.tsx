@@ -77,12 +77,13 @@ export default function RequestDataContext({
     useEffect(() => {
         (async () => {
             try {
-                const { data } = await axios.get(
-                    "https://api64.ipify.org/?format=json"
-                );
+                if (!localStorage.city) {
+                    const data2 = await axios.get("https://ipinfo.io/");
+                    localStorage.city = data2.data.city;
+                }
                 getData({
                     variables: {
-                        q: data.ip,
+                        q: localStorage.city,
                     },
                 });
             } catch (error) {

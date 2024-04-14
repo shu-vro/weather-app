@@ -2,8 +2,10 @@ import Redis from "redis";
 import { getPreviousDate, weatherAPI } from "./req.ts";
 // import util from "util";
 
+const REDIS_HOST = process.env.REDIS_HOST || "127.0.0.1";
+
 const redis = await Redis.createClient({
-    url: "redis://redis:6379",
+    url: `redis://${REDIS_HOST}:6379`,
 })
     .on("error", err => {
         console.log("Redis Client Error", err);
@@ -35,25 +37,27 @@ export const resolvers = {
                 );
 
                 if (data !== null) {
-                    for (let i = 0; i < data.forecast.forecastday.length; i++) {
-                        let data_new = structuredClone(data);
-                        const forecast = data.forecast.forecastday[i];
-                        data_new.forecast.forecastday = [forecast];
-                        const forecastKey = `history:${q.toUpperCase()}:${
-                            forecast.date
-                        }`;
+                    await redis_json_set(forecastKey, data, -1);
+                    return data;
+                    // for (let i = 0; i < data.forecast.forecastday.length; i++) {
+                    //     let data_new = structuredClone(data);
+                    //     const forecast = data.forecast.forecastday[i];
+                    //     data_new.forecast.forecastday = [forecast];
+                    //     const forecastKey = `history:${q.toUpperCase()}:${
+                    //         forecast.date
+                    //     }`;
 
-                        // store 6 days data and return `dt` day
-                        const check = await redis.exists(forecastKey);
-                        if (!check) {
-                            await redis_json_set(forecastKey, data_new, -1);
-                        }
+                    //     // store 6 days data and return `dt` day
+                    //     const check = await redis.exists(forecastKey);
+                    //     if (!check) {
+                    //         await redis_json_set(forecastKey, data_new, -1);
+                    //     }
 
-                        if (i === data.forecast.forecastday.length - 1) {
-                            await redis_json_set(forecastKey, data, -1);
-                            return data;
-                        }
-                    }
+                    //     if (i === data.forecast.forecastday.length - 1) {
+                    //         await redis_json_set(forecastKey, data, -1);
+                    //         return data;
+                    //     }
+                    // }
                 } else {
                     console.log("[ ERROR ]: " + error);
                 }
