@@ -85,7 +85,12 @@ export default function CurrentInfoComponent() {
                         <div className="flex flex-row">
                             <BsThermometerHalf className="mr-4" />{" "}
                             <span>{currentData.current.temp_c}</span>
-                            <small>&deg;</small>
+                            <small>
+                                &deg;
+                                <span className="align-baseline text-medium">
+                                    C
+                                </span>
+                            </small>
                         </div>
                     }
                     label="Temperature"

@@ -81,7 +81,8 @@ export default function Chart({
                 // },
                 data: [
                     {
-                        yValueFormatString: `#,### ${suffix}`,
+                        yValueFormatString: `#,###`,
+                        toolTipContent: `{x}: {y} ${suffix}`,
                         xValueFormatString: "D'th' MMMM, YYYY hh:mm tt",
                         type: "spline",
                         lineColor: "white",

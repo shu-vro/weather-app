@@ -1,23 +1,35 @@
 import { cn } from "@/lib/utils";
 import { Card, CardBody, CardProps, Image } from "@nextui-org/react";
 
-export function HourlyWeather({ hourData }: { hourData: IHourlyData }) {
+export function HourlyWeather({
+    hourData,
+    active = false,
+}: {
+    hourData: IHourlyData;
+    active?: boolean;
+}) {
     const epoch = new Date(hourData.time_epoch * 1000);
     return (
-        <div className="flex flex-col items-center bg-accent rounded-2xl p-3 text-black flex-[0_0_auto]">
-            <span className="text-xl">
-                {epoch.toLocaleTimeString([], {
-                    hour: "2-digit",
-                    hour12: true,
-                })}
-            </span>
-            <Image
-                src={hourData.condition.icon}
-                alt={hourData.time_epoch.toString()}
-                className="w-16 h-16"
-            />
-            <span>{hourData.temp_c}&deg;</span>
-        </div>
+        <>
+            <div
+                className={cn(
+                    "flex flex-col items-center bg-accent rounded-2xl p-3 text-black flex-[0_0_auto] w-28",
+                    active && "border-4 border-blue-500"
+                )}>
+                <span className="text-xl">
+                    {epoch.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        hour12: true,
+                    })}
+                </span>
+                <Image
+                    src={hourData.condition.icon}
+                    alt={hourData.time_epoch.toString()}
+                    className="w-16 h-16"
+                />
+                <span>{hourData.temp_c}&deg;</span>
+            </div>
+        </>
     );
 }
 

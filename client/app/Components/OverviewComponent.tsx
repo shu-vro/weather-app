@@ -102,20 +102,6 @@ export default function OverviewComponent() {
                                 const parsedTime = new Date(
                                     hour.time_epoch * 1000
                                 );
-                                // if (
-                                //     Math.abs(
-                                //         Date.now() - parsedTime.getTime()
-                                //     ) < 3600000
-                                // ) {
-                                //     console.log(parsedTime.getHours());
-                                //     return {
-                                //         x: parsedTime,
-                                //         y: hour.uv,
-                                //         markerType: "circle",
-                                //         markerColor: "black",
-                                //         markerBorderColor: "white",
-                                //     };
-                                // }
                                 return {
                                     x: parsedTime,
                                     y: hour.uv,
