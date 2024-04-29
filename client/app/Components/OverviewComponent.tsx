@@ -44,6 +44,8 @@ export default function OverviewComponent() {
     if (loading) return <Loading name="overview" />;
     if (error) return `error: ${error}`;
 
+    console.log(data, loading, error);
+
     const {
         getHistoryData,
         getForecastData,

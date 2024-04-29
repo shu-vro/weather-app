@@ -7,6 +7,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { BsThermometerHalf, BsWind } from "react-icons/bs";
 import { useRequestData } from "./RequestDataContext";
 import Loading from "./Loading";
+import { useCelsiusOrFahrenheit } from "./CelsiusOrFahrenheitContext";
 // import { gql, useQuery } from "@apollo/client";
 
 // const GET_FORECAST = gql`
@@ -31,6 +32,7 @@ import Loading from "./Loading";
 
 export default function CurrentInfoComponent() {
     const { data, loading, error } = useRequestData();
+    const { celsius } = useCelsiusOrFahrenheit();
     if (loading) return <Loading name="hourly" count={3} />;
     if (error) return `error: ${error}`;
     const currentData: ICurrentInfo = data?.getForecastData;
@@ -84,11 +86,15 @@ export default function CurrentInfoComponent() {
                     stats={
                         <div className="flex flex-row">
                             <BsThermometerHalf className="mr-4" />{" "}
-                            <span>{currentData.current.temp_c}</span>
+                            <span>
+                                {celsius
+                                    ? currentData.current.temp_c
+                                    : currentData.current.temp_f}
+                            </span>
                             <small>
                                 &deg;
                                 <span className="align-baseline text-medium">
-                                    C
+                                    {celsius ? "C" : "F"}
                                 </span>
                             </small>
                         </div>

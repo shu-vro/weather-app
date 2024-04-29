@@ -4,8 +4,10 @@ import { Input, Avatar, Tabs, Tab } from "@nextui-org/react";
 import React from "react";
 import { RiSearch2Line } from "react-icons/ri";
 import icon from "@/assets/icon.png";
+import { useCelsiusOrFahrenheit } from "./CelsiusOrFahrenheitContext";
 
 export default function Header() {
+    const { celsius, setTemperature } = useCelsiusOrFahrenheit();
     return (
         <div className="flex justify-between items-center mr-6 ml-10">
             <div className="greetings flex flex-row items-center gap-4">
@@ -37,8 +39,9 @@ export default function Header() {
                 <Tabs
                     color="primary"
                     radius="full"
+                    selectedKey={celsius ? "c" : "f"}
                     onSelectionChange={e => {
-                        console.log(e);
+                        setTemperature(e === "c");
                     }}>
                     <Tab title="C°" key="c" className="rounded-full" />
                     <Tab title="F°" key="f" className="rounded-full" />

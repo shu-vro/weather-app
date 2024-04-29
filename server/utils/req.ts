@@ -1,4 +1,5 @@
 import axios from "axios";
+// import { inspect } from "util";
 
 function getPrevious_6_Date(dateString: string) {
     let date = new Date(dateString);
@@ -62,6 +63,12 @@ export async function weatherAPI(
         });
         try {
             const data = await instance.get(`${endpoint}.json`);
+            // console.log(
+            //     inspect(data, { depth: Infinity }),
+            //     instance.getUri(),
+            //     dt,
+            //     end_dt
+            // );
             return { data: data.data as WeatherData, error: null };
         } catch (error: any) {
             return {

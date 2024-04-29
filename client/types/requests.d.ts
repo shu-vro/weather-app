@@ -3,6 +3,8 @@ declare interface IBasicForecastData {
     day: {
         avgtemp_c: number;
         mintemp_c: number;
+        avgtemp_f: number;
+        mintemp_f: number;
         condition: {
             icon: string;
         };
@@ -12,6 +14,7 @@ declare interface IBasicForecastData {
 declare interface ICurrentInfo {
     current: {
         temp_c: number;
+        temp_f: number;
         condition: {
             icon: string;
             text: string;
@@ -28,6 +31,7 @@ declare interface ICurrentInfo {
 declare interface IHourlyData {
     time_epoch: number;
     temp_c: number;
+    temp_f: number;
     condition: {
         icon: string;
     };

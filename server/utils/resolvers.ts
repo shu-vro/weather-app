@@ -36,28 +36,11 @@ export const resolvers = {
                     day
                 );
 
+                // console.log(data, error);
+
                 if (data !== null) {
-                    await redis_json_set(forecastKey, data, -1);
+                    // await redis_json_set(forecastKey, data, -1);
                     return data;
-                    // for (let i = 0; i < data.forecast.forecastday.length; i++) {
-                    //     let data_new = structuredClone(data);
-                    //     const forecast = data.forecast.forecastday[i];
-                    //     data_new.forecast.forecastday = [forecast];
-                    //     const forecastKey = `history:${q.toUpperCase()}:${
-                    //         forecast.date
-                    //     }`;
-
-                    //     // store 6 days data and return `dt` day
-                    //     const check = await redis.exists(forecastKey);
-                    //     if (!check) {
-                    //         await redis_json_set(forecastKey, data_new, -1);
-                    //     }
-
-                    //     if (i === data.forecast.forecastday.length - 1) {
-                    //         await redis_json_set(forecastKey, data, -1);
-                    //         return data;
-                    //     }
-                    // }
                 } else {
                     console.log("[ ERROR ]: " + error);
                 }

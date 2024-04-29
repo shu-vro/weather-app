@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./Components/Header";
 import { ThemeProvider } from "./Components/Providers";
 import ApolloContext from "./Components/ApolloContext";
+import { CelsiusOrFahrenheitContext } from "./Components/CelsiusOrFahrenheitContext";
 
 const font = Montserrat({ subsets: ["latin"] });
 
@@ -26,10 +27,12 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange>
                     <ApolloContext>
-                        <div className="p-6">
-                            <Header />
-                            {children}
-                        </div>
+                        <CelsiusOrFahrenheitContext>
+                            <div className="p-6">
+                                <Header />
+                                {children}
+                            </div>
+                        </CelsiusOrFahrenheitContext>
                     </ApolloContext>
                 </ThemeProvider>
             </body>

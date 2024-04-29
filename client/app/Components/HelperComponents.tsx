@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Card, CardBody, CardProps, Image } from "@nextui-org/react";
+import { useCelsiusOrFahrenheit } from "./CelsiusOrFahrenheitContext";
+import { useMemo } from "react";
 
 export function HourlyWeather({
     hourData,
@@ -8,7 +10,15 @@ export function HourlyWeather({
     hourData: IHourlyData;
     active?: boolean;
 }) {
-    const epoch = new Date(hourData.time_epoch * 1000);
+    const { celsius } = useCelsiusOrFahrenheit();
+    const epoch = useMemo(
+        () =>
+            new Date(hourData.time_epoch * 1000).toLocaleTimeString([], {
+                hour: "2-digit",
+                hour12: true,
+            }),
+        []
+    );
     return (
         <>
             <div
@@ -16,36 +26,42 @@ export function HourlyWeather({
                     "flex flex-col items-center bg-accent rounded-2xl p-3 text-black flex-[0_0_auto] w-28",
                     active && "border-4 border-blue-500"
                 )}>
-                <span className="text-xl">
-                    {epoch.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        hour12: true,
-                    })}
-                </span>
+                <span className="text-xl">{epoch}</span>
                 <Image
                     src={hourData.condition.icon}
                     alt={hourData.time_epoch.toString()}
                     className="w-16 h-16"
                 />
-                <span>{hourData.temp_c}&deg;</span>
+                <span>
+                    {celsius ? hourData.temp_c : hourData.temp_f}&deg;{" "}
+                    {celsius ? "C" : "F"}
+                </span>
             </div>
         </>
     );
 }
 
 export function ForecastCard({ forecast }: { forecast: IBasicForecastData }) {
-    const date = new Date(forecast.date);
+    const { celsius } = useCelsiusOrFahrenheit();
+    const date = useMemo(() => new Date(forecast.date), []);
+    // const date = new Date(forecast.date);
     return (
         <div className="flex flex-row justify-between items-center bg-background rounded-2xl p-3 shadow-md">
             <div className="flex flex-row justify-center items-center">
                 <Image src={forecast.day.condition.icon} alt="forecast" />
                 <div>
                     <span className="text-2xl">
-                        +{forecast.day.avgtemp_c}&deg;
+                        {celsius
+                            ? forecast.day.avgtemp_c
+                            : forecast.day.avgtemp_f}
+                        &deg;
                     </span>
                     /
                     <span className="text-sm">
-                        +{forecast.day.mintemp_c}&deg;
+                        {celsius
+                            ? forecast.day.mintemp_c
+                            : forecast.day.mintemp_f}
+                        &deg;
                     </span>
                 </div>
             </div>

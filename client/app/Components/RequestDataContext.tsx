@@ -17,6 +17,7 @@ const WEATHER_DATA = gql`
             }
             current {
                 temp_c
+                temp_f
                 condition {
                     icon
                     text
@@ -36,6 +37,8 @@ const WEATHER_DATA = gql`
             day {
                 avgtemp_c
                 mintemp_c
+                avgtemp_f
+                mintemp_f
                 condition {
                     icon
                 }
@@ -43,6 +46,7 @@ const WEATHER_DATA = gql`
             hour {
                 time_epoch
                 temp_c
+                temp_f
                 humidity
                 uv
                 pressure_mb
